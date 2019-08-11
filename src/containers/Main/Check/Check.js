@@ -13,9 +13,12 @@ class Check extends Component {
         timeCounter: 0,
         startingTime: 0,
         intervalId: null,
-        didReset: false
+        didReset: false,
+        workingWatch: 0
     }
-
+    componentDidMount() {
+        this.setState({didReset: false,})
+    }
     componentWillReceiveProps() {
         if (this.props.shouldReset) {
             return this.resetAll()
@@ -68,12 +71,10 @@ class Check extends Component {
         this.setState({ isStopped: true })
     }
     resetAll = () => {
-        console.log(this.state)
         console.log('reset')
+        clearInterval(this.state.intervalId)
         let updateTime = { ...this.state.timeSplit, seconds: 0, mins: 0, hours: 0 }
-        console.log(updateTime)
-        let updateState = { ...this.state, timeSplit: updateTime, isStopped: true, intervalId: null, timeCounter: 0,startingTime: 0, didReset: true }
-        console.log(updateState)
+        let updateState = { ...this.state, timeSplit: updateTime, isStopped: true, intervalId: null, timeCounter: 0 ,startingTime: 0, didReset: true }
         this.setState({ ...updateState })
     }
     render() {
