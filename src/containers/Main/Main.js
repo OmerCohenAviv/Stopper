@@ -14,30 +14,30 @@ class Main extends Component {
     }
     startingTimeHandler = () => {
         console.log('startingTimeHandler')
-            let currentTime = Math.floor(Date.now() / 1000) - this.state.displayTime
-            this.setState({ startingTime: currentTime, stop: false })
-            this.displayTime()
-        
+        let currentTime = Math.floor(Date.now() / 1000) - this.state.displayTime
+        this.setState({ startingTime: currentTime, stop: false })
+        this.displayTime()
+
     }
 
     displayTime = () => {
         console.log('displayTimeHandler')
         setInterval(() => {
             if (!this.state.stop) {
-                let displayT = (Math.floor(Date.now() / 1000) - this.state.startingTime )
+                let displayT = (Math.floor(Date.now() / 1000) - this.state.startingTime)
                 this.setState({ displayTime: displayT });
                 this.settingTime()
             }
-        }, 100);
+        }, 1000);
     }
 
     settingTime = () => {
         let time = { ...this.state }
         time.seconds = this.state.displayTime % 60
-        if ( this.state.displayTime % 60 === 0 && this.state.displayTime > 0) {
+        if (this.state.displayTime % 60 === 0 && this.state.displayTime > 0) {
             time.mins = time.mins + 1;
         }
-        if (   time.mins === 60 && this.state.displayTime > 0) {
+        if (time.mins === 60 && this.state.displayTime > 0) {
             time.hours = time.hours + 1;
         }
         if (time.mins === 60) {
