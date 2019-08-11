@@ -23,12 +23,15 @@ class Main extends Component {
     render() {
             let stopwatches = [];
             for (let i = 0; i < 4; i++) {
-                stopwatches.push(<Check ShouldReset={this.state.resetAll} />)
+                stopwatches.push(<Check ShouldReset={this.state} />)
             }
         return (
             <div>
                 <h1>Currently Working Stopwatches - {this.state.workingStopWatches}</h1>
-                    {stopwatches}
+                <Check shouldReset={this.state.resetAll} />
+                <Check shouldReset={this.state.resetAll} />
+                <Check shouldReset={this.state.resetAll} />
+                <Check shouldReset={this.state.resetAll} />
                 <button onClick={this.resetEverythingHandler}>Reset</button>
             </div>
         );
