@@ -14,10 +14,9 @@ class Check extends Component {
         startingTime: 0,
         intervalId: null,
         didReset: false,
-        workingWatch: 0
     }
     componentDidMount() {
-        this.setState({didReset: false,})
+        this.setState({ didReset: false, })
     }
     componentWillReceiveProps() {
         if (this.props.shouldReset) {
@@ -38,6 +37,7 @@ class Check extends Component {
 
         intervalId = setInterval(() => {
             if (!this.state.isStopped) {
+                console.log('check')
                 counter = Math.floor(Date.now() / 1000) - startingTime
             }
             this.setState({ timeCounter: counter, intervalId: intervalId }, this.handlingTime(counter))
@@ -70,16 +70,33 @@ class Check extends Component {
     stoppingHandler = () => {
         this.setState({ isStopped: true })
     }
+    resetOne = () => {
+        clearInterval(this.state.intervalId)
+        this.setState({
+            timeSplit: {
+                seconds: 0,
+                mins: 0,
+                hours: 0
+            },
+            isStopped: true,
+            timeCounter: 0,
+            startingTime: 0,
+            intervalId: null,
+            displayTime: 0
+        })
+    }
     resetAll = () => {
         console.log('reset')
         clearInterval(this.state.intervalId)
         let updateTime = { ...this.state.timeSplit, seconds: 0, mins: 0, hours: 0 }
-        let updateState = { ...this.state, timeSplit: updateTime, isStopped: true, intervalId: null, timeCounter: 0 ,startingTime: 0, didReset: true }
+        let updateState = { ...this.state, timeSplit: updateTime, isStopped: true, intervalId: null, timeCounter: 0, startingTime: 0, didReset: true }
         this.setState({ ...updateState })
     }
+
     render() {
         return (
             <Stopwatch
+                resetTimer={this.resetOne}
                 displayTime={this.state.timeCounter}
                 stopState={this.state.isStopped}
                 startStopper={this.startingHandler}
