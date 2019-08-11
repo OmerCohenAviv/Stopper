@@ -1,0 +1,38 @@
+.Stopwatch {
+  margin: 0;
+  display: block;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+p {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+button {
+  border: none;
+  box-shadow: 1px 1.2px #ccc;
+  width: 200px;
+  margin: 6px;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.Success {
+  background-color: lightgreen;
+}
+
+.Danger {
+  background-color: salmon;
+}
+
+.Reset {
+  background-color: orange;
+}

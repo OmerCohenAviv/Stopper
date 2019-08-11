@@ -10,54 +10,65 @@ class Main extends Component {
         hours: 0,
         startingTime: 0,
         displayTime: 0,
-        stop: true,
-        start: false
+        stop: false,
     }
     startingTimeHandler = () => {
         console.log('startingTimeHandler')
-        if (this.state.stop) {
             let currentTime = Math.floor(Date.now() / 1000) - this.state.displayTime
-            this.setState({ startingTime: currentTime, stop: false, start: true})
-            this.displayTime() 
-        }
+            this.setState({ startingTime: currentTime, stop: false })
+            this.displayTime()
+        
     }
 
     displayTime = () => {
         console.log('displayTimeHandler')
-            setInterval(() => {
-                if (!this.state.stop) {
-                let displayT = (Math.floor(Date.now() / 1000  ) -  this.state.startingTime )
+        setInterval(() => {
+            if (!this.state.stop) {
+                let displayT = (Math.floor(Date.now() / 1000) - this.state.startingTime )
                 this.setState({ displayTime: displayT });
                 this.settingTime()
-                }
-            }, 1000);
-        }
-
-    settingTime = () => {
-                let time = { ...this.state }
-                time.seconds = this.state.displayTime % 60
-                if (time.seconds % 60 === 0 && this.state.displayTime > 0  ) {
-                    time.mins = time.mins + 1;
-                }
-                if ((this.state.displayTime / 1000) % 60 === 0 && this.state.displayTime > 0  ) {
-                    time.hours = time.hours + 1;
-                }
-                this.setState({
-                    seconds: time.seconds,
-                    mins: time.mins,
-                    hours: time.hours
-                });
-
-     
+            }
+        }, 100);
     }
 
+    settingTime = () => {
+        let time = { ...this.state }
+        time.seconds = this.state.displayTime % 60
+        if ( this.state.displayTime % 60 === 0 && this.state.displayTime > 0) {
+            time.mins = time.mins + 1;
+        }
+        if (   time.mins === 60 && this.state.displayTime > 0) {
+            time.hours = time.hours + 1;
+        }
+        if (time.mins === 60) {
+            time.mins = 0;
+        }
+        this.setState({
+            seconds: time.seconds,
+            mins: time.mins,
+            hours: time.hours
+        });
+
+
+    }
     stopHandler = () => {
-        this.setState({stop: true})
+        this.setState({ stop: true })
+    }
+    resetTimeHandler = () => {
+        this.setState({
+            stop: true,
+            displayTime: 0,
+            seconds: 0,
+            mins: 0,
+            hours: 0
+        })
     }
     render() {
         return (
             <div>
                 <Stopwatch
+                    resetTimer={this.resetTimeHandler}
+                    stopState={this.state.stop}
                     stopTimer={this.stopHandler}
                     start={this.startingTimeHandler}
                     hour={this.state.hours}
