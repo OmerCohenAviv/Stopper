@@ -27,25 +27,24 @@ const stopwatch = (props) => {
         }
     }
 
-    let activeSuccess = props.seconds > 0 && !props.stopState 
-    console.log(activeSuccess)
+    let activeSuccess = props.timeData.seconds > 0 && !props.stopState 
     return <div className={classes.Stopwatch}>
         <p
-            onClick={props.start}>
-            {props.hour} : {props.mins} : {props.seconds}
+            onClick={props.timeData.startStopper}>
+            {props.timeData.hours} : {props.timeData.mins} : {props.timeData.seconds}
         </p>
 
         <button
             key='success'
             style={activeSuccess ? [styles.buttonSuccess,styles.buttonSuccess.buttonSuccessActive] : styles.buttonSuccess}
-            onClick={props.start}>
-            {props.stopState && props.seconds > 0 ? 'Continue' : props.seconds > 0 && !props.stopState ? 'Counting...' : 'Start'}
+            onClick={props.startStopper}>
+            {props.stopState && props.seconds > 0 ? 'Continue' : props.displayTime > 0 && !props.stopState ? 'Counting...' : 'Start'}
         </button>
         <button
             key='danger'
             style={styles.buttonDanger}
             className={classes.Danger}
-            onClick={props.stopTimer}>
+            onClick={props.stopStopper}>
             Stop
             </button>
         <button
