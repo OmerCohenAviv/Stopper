@@ -10,10 +10,10 @@ const stopwatch = (props) => {
             ':hover': {
                 backgroundColor: 'green'
             },
-        buttonSuccessActive: {
-            backgroundColor: 'blue'
-        }
-            
+            buttonSuccessActive: {
+                backgroundColor: 'blue'
+            }
+
         },
         buttonDanger: {
             ':hover': {
@@ -27,7 +27,7 @@ const stopwatch = (props) => {
         }
     }
 
-    let activeSuccess = props.timeData.seconds > 0 && !props.stopState 
+    let activeSuccess = props.timeData.seconds > 0 && !props.stopState
     return <div className={classes.Stopwatch}>
         <p
             onClick={props.timeData.startStopper}>
@@ -36,9 +36,9 @@ const stopwatch = (props) => {
 
         <button
             key='success'
-            style={activeSuccess ? [styles.buttonSuccess,styles.buttonSuccess.buttonSuccessActive] : styles.buttonSuccess}
+            style={activeSuccess ? [styles.buttonSuccess, styles.buttonSuccess.buttonSuccessActive] : styles.buttonSuccess}
             onClick={props.startStopper}>
-            {props.stopState && props.seconds > 0 ? 'Continue' : props.displayTime > 0 && !props.stopState ? 'Counting...' : 'Start'}
+            {props.stopState && props.timeData.seconds > 0 ? 'Continue' : props.displayTime > 0 && !props.stopState ? 'Counting...' : 'Start'}
         </button>
         <button
             key='danger'
@@ -54,6 +54,14 @@ const stopwatch = (props) => {
             onClick={props.resetTimer}>
             Reset
             </button>
+        <label className={classes.label} > <input
+            className={props.stopState || props.timeData.seconds === 0
+                ? classes.input : classes.active}
+            type='checkbox'
+            checked={!props.stopState && props.timeData.seconds > 0} />
+            
+
+        </label>
 
     </div>
 };
