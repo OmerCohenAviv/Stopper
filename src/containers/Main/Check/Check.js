@@ -9,7 +9,7 @@ class Check extends Component {
             mins: 0,
             hours: 0
         },
-        isStopped: false,
+        isStopped: true,
         timeCounter: 0,
         startingTime: 0,
         intervalId: null,
@@ -29,9 +29,8 @@ class Check extends Component {
     //Starting Handler -> isStopped - False, initing startingTime
     startingHandler = () => {
         clearInterval(this.state.intervalId)
-        this.setState({isStopped: false})
         let currentTime = Math.floor(Date.now() / 1000)
-        this.setState({ startingTime: currentTime, didReset: false, intervalId: null}, () => this.props.checkActive(this.state.isStopped),
+        this.setState({ startingTime: currentTime, didReset: false, intervalId: null, isStopped: false}, () => this.props.checkActive(this.state.isStopped),
             this.timeCounterHandler(currentTime - this.state.timeCounter))
     }
     //timeCounterHandler -> timeCounter - startingTime = counter.
@@ -96,13 +95,14 @@ class Check extends Component {
         clearInterval(this.state.intervalId)
         let updateTime = { ...this.state.timeSplit, seconds: 0, mins: 0, hours: 0 }
         let updateState = { ...this.state, timeSplit: updateTime, isStopped: true, intervalId: null, timeCounter: 0, startingTime: 0, didReset: true }
-        this.setState({ ...updateState })
+        this.setState({ state: {...updateState} })
     }
 
     render() {
         
         return (
             <Stopwatch
+                isStopped={!this.state.isStopped}
                 checkActiveWatch={this.props.checkActive}
                 resetTimer={this.resetOne}
                 displayTime={this.state.timeCounter}
